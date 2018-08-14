@@ -162,16 +162,19 @@ function patch (fs) {
     WriteStream = legStreams.WriteStream
   }
 
-  var fs$ReadStream = fs.ReadStream
-  ReadStream.prototype = Object.create(fs$ReadStream.prototype)
-  ReadStream.prototype.open = ReadStream$open
+  // Avoid throwing on startup if browserify-fs is replacing fs.
+  if (fs.ReadStream) {
+    var fs$ReadStream = fs.ReadStream
+    ReadStream.prototype = Object.create(fs$ReadStream.prototype)
+    ReadStream.prototype.open = ReadStream$open
 
-  var fs$WriteStream = fs.WriteStream
-  WriteStream.prototype = Object.create(fs$WriteStream.prototype)
-  WriteStream.prototype.open = WriteStream$open
+    var fs$WriteStream = fs.WriteStream
+    WriteStream.prototype = Object.create(fs$WriteStream.prototype)
+    WriteStream.prototype.open = WriteStream$open
 
-  fs.ReadStream = ReadStream
-  fs.WriteStream = WriteStream
+    fs.ReadStream = ReadStream
+    fs.WriteStream = WriteStream
+  }
 
   function ReadStream (path, options) {
     if (this instanceof ReadStream)
