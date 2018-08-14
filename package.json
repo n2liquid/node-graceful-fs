@@ -1,5 +1,5 @@
 {
-  "name": "graceful-fs",
+  "name": "@n2liquid/graceful-fs",
   "description": "A drop-in replacement for fs, making various improvements.",
   "version": "4.1.11",
   "repository": {
